@@ -61,11 +61,11 @@ return new ResponseEntity(list , HttpStatus.ACCEPTED);
 
  }
 
- @PostMapping(value = "/placeorder")
-    public String placeorder(@RequestBody OrderPojo orderPojo) throws UserException {
+ @PostMapping(value = "/placeorder/{id}")
+    public String placeorder(@RequestBody OrderPojo orderPojo , @PathVariable(name = "id") int id) throws UserException {
 
 //     orderrepository.save(orderPojo);
-    return userService.placeuserorder(orderPojo);
+    return userService.placeuserorder(orderPojo , id);
 
 
  }
@@ -79,6 +79,15 @@ return new ResponseEntity(list , HttpStatus.ACCEPTED);
 
     }
 
+    @GetMapping(value = "/finduserorders/{id}")
+    public ResponseEntity<List<OrderPojo>> getuserorders(@PathVariable(name = "id") int id) throws UserException {
+
+
+        List<OrderPojo>  list = userService.getUserByid(id).get().getOrders();
+        return new ResponseEntity(list , HttpStatus.ACCEPTED);
+
+
+    }
 
 
 

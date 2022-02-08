@@ -3,6 +3,7 @@ package com.example.demo.service.userservice;
 import com.example.demo.exception.UserException;
 import com.example.demo.pojo.userpojo.OrderPojo;
 import com.example.demo.pojo.userpojo.User;
+import com.example.demo.repository.userdao.Orderrepository;
 import com.example.demo.repository.userdao.Userdaorepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -16,7 +17,8 @@ public class UserService {
 
     @Autowired
     Userdaorepository userdaorepository;
-
+    @Autowired
+    Orderrepository orderrepository;
 
     public User saveuser(User user) throws UserException {
 
@@ -48,12 +50,13 @@ public class UserService {
         return list;
     }
 
-    public String placeuserorder(OrderPojo orderPojo) throws UserException {
+    public String placeuserorder(OrderPojo orderPojo , int id) throws UserException {
 
 
-        User user = getUserByid(1).get();
-        user.getOrders().add(orderPojo);
-        userdaorepository.save(user);
+        User user = userdaorepository.findById(id).get();
+        orderPojo.setUser(user);
+        orderrepository.save(orderPojo);
+
         return "Order with  placed";
 
     }

@@ -35,10 +35,10 @@ public class OrderPojo {
    @Column(name = "total_qty")
     private int total_qty;
 
-//   @ManyToOne()
-//    @JoinColumn(name = "user_id")
-//@JsonIgnore
-//    User user;
+   @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+@JsonIgnore
+    User user;
 
 
 }

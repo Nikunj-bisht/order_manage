@@ -1,5 +1,6 @@
 package com.example.demo.pojo.userpojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -34,8 +35,8 @@ public class User {
   @Column(name = "email")
   private String email;
 
-  @OneToMany(cascade = CascadeType.ALL)
-          @JoinColumn(name = "user_id",referencedColumnName = "user_id")
+  @OneToMany(cascade = {CascadeType.REMOVE},fetch = FetchType.LAZY,mappedBy = "user")
+  @JsonIgnore
   List<OrderPojo> orders;
 
 
